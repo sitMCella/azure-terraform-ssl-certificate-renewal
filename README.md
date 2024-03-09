@@ -25,13 +25,15 @@ Create one file `secret/main.json` with the following content:
 ```
 {
   "tenant_id": "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "subscription_id": "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
   "client_id": "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
   "client_secret": "xxxxxxxxxxxxxxxxx"
 }
 ```
 
-The "tenant_id" property corresponds to the Microsoft Entra tenant ID. The "client_id" and "client_secret" 
-properties correspond to the client ID and secret of the App Registration.
+The "tenant_id" property corresponds to the Microsoft Entra tenant ID. The "subscription_id" property 
+correspond to the Azure Subscription ID. The "client_id" and "client_secret" properties correspond 
+to the client ID and secret of the App Registration.
 
 ## Provision Solution
 
