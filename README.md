@@ -5,10 +5,12 @@
 The SSL Certificate Renewal Terraform project defines an automation procedure for the SSL Certificate 
 of a web application hosted in one Azure App Service and exposed via one Azure Application Gateway.
 
-The SSL Certificates are generated via Let's Encrypt and one Azure DNS Zone associates the custom domain 
-with the web application.
+The SSL Certificates are generated via Let's Encrypt. One Azure DNS Zone is used for associate the 
+custom domain with the web application.
 
-The automation script is implemented in one Azure Function App, and 
+The automation script is implemented using one Azure Function App. The Let's Encrypt challenges are 
+stored in one Azure Storage Account. Let's Encrypt will verify the challenges using a static web 
+application in the Storage Account.
 
 ## Requirements
 
