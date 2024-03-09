@@ -1,17 +1,17 @@
 variable "tenant_id" {
-    description = "(Required) The Azure Tenant ID."
+  description = "(Required) The Azure Tenant ID."
 }
 
 variable "subscription_id" {
-    description = "(Required) The Subscription ID."
+  description = "(Required) The Subscription ID."
 }
 
 variable "client_id" {
-    description = "(Required) The client ID of the Service Principal Account (App registration)."
+  description = "(Required) The client ID of the Service Principal Account (App registration)."
 }
 
 variable "client_secret" {
-    description = "(Required) The client secret of the Service Principal Account (App registration)."
+  description = "(Required) The client secret of the Service Principal Account (App registration)."
 }
 
 variable "location" {
