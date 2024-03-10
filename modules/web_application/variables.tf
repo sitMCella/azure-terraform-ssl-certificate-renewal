@@ -1,3 +1,8 @@
+variable "location" {
+  description = "(Required) The location of the Azure resources."
+  type        = string
+}
+
 variable "tenant_id" {
   description = "(Required) The Azure Tenant ID."
   type        = string
@@ -18,12 +23,8 @@ variable "client_secret" {
   type        = string
 }
 
-variable "location" {
-  description = "(Required) The location of the Azure resources."
-  type        = string
-}
-
-variable "location_abbreviation" {
-  description = "(Required) The abbreviation of the location used in the name of the Azure resources."
-  type        = string
+variable "tags" {
+  description = "(Optional) A mapping of tags which should be assigned to the Azure resources."
+  type        = map(any)
+  default     = {}
 }

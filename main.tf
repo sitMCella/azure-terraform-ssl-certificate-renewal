@@ -1,5 +1,9 @@
-resource "azurerm_resource_group" "network_resource_group" {
-  name     = "rg-network-prod-${var.location}-001"
-  location = var.location
-}
+module "web_application" {
+  source = "./modules/web_application"
 
+  location        = var.location
+  tenant_id       = var.tenant_id
+  subscription_id = var.subscription_id
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+}
