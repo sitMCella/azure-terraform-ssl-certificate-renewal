@@ -18,6 +18,11 @@ variable "client_secret" {
   type        = string
 }
 
+variable "domain_name" {
+  description = "(Required) The custom domain name for the web application."
+  type        = string
+}
+
 variable "location" {
   description = "(Required) The location of the Azure resources."
   type        = string
