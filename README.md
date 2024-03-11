@@ -19,8 +19,8 @@ application in the Storage Account.
 
 1. Register one custom domain using a domain registrar, for example Namecheap or GoDaddy.
 2. Create one Azure Principal Account (App Registration) in Microsoft Entra and generate the client secret.
-3. Assign the RBAC role "Contributor" and "User Access Administrator" to the App Registration on the 
-Subscription access control (IAM).
+3. Assign the RBAC roles "Contributor", "User Access Administrator", and "Key Vault Administrator" to the App Registration on the access 
+control (IAM) of the Subscription.
 4. Install Azure CLI in the local environment.
 
 ## Configuration
@@ -31,13 +31,19 @@ Create one file `secret/main.json` with the following content:
   "tenant_id": "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
   "subscription_id": "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
   "client_id": "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-  "client_secret": "xxxxxxxxxxxxxxxxx"
+  "client_secret": "xxxxxxxxxxxxxxxxx",
+  "domain_name": "domain.xyz",
+  "email_address": "account@email.com",
+  "pfx_password": "pfxpa$$word"
 }
 ```
 
 The "tenant_id" property corresponds to the Microsoft Entra tenant ID. The "subscription_id" property 
 correspond to the Azure Subscription ID. The "client_id" and "client_secret" properties correspond 
-to the client ID and secret of the App Registration.
+to the client ID and secret of the App Registration. The "domain_name" property corresponds to the 
+name of the custom domain created in the domain registrar. The "email_address" property corresponds to 
+the email address used for creating the SSL certificate. The "pfx_password" property corresponds to the 
+password for the PFX SSL Certificate.
 
 ## Provision Solution
 

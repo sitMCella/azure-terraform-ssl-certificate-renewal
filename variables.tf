@@ -23,6 +23,16 @@ variable "domain_name" {
   type        = string
 }
 
+variable "email_address" {
+  description = "(Required) The email address applied to the SSL Certificate."
+  type        = string
+}
+
+variable "pfx_password" {
+  description = "(Required) The password of the SSL certificate in PFX format."
+  type        = string
+}
+
 variable "location" {
   description = "(Required) The location of the Azure resources."
   type        = string
