@@ -48,6 +48,8 @@ data "azurerm_key_vault_certificate" "key_vault_certificate" {
   version      = "latest"
 }
 
+// 4. Provision the Application Gateway after the initial SSL certificate has been added to the Key Vault 
+// using the function in the Azure Function App.
 resource "azurerm_application_gateway" "application_gateway" {
   name                = "agw-web-application-prod-${var.location}-001"
   resource_group_name = azurerm_resource_group.application_gateway_resource_group.name
@@ -186,7 +188,8 @@ resource "azurerm_application_gateway" "application_gateway" {
   tags = var.tags
 }
 
-// Final record to insert in the Azure DNS Zone.
+// 5. Create the final record in the Azure DNS Zone.
+// Delete the temporary record from the Azure DNS Zone.
 resource "azurerm_dns_a_record" "web_application_dns_zone_record" {
   name                = var.web_application_subdomain_name
   zone_name           = var.dns_zone_name

@@ -1,5 +1,4 @@
-// Temporary record to insert in the Azure DNS Zone in order to generate the initial SSL Certificate.
-// This record have to be removed afterwards.
+// 2. Create a temporary record in the Azure DNS Zone in order to generate the initial SSL Certificate.
 resource "azurerm_dns_cname_record" "web_application_dns_zone_record" {
   name                = var.web_application_subdomain_name
   zone_name           = var.dns_zone_name

@@ -3,17 +3,18 @@
 ## Introduction
 
 The SSL Certificate Renewal Terraform project defines an automation procedure for the renewal of the 
-SSL Certificate of a web application hosted in one Azure App Service and exposed via one Azure 
+SSL Certificate of a web application hosted in one Azure App Service, and exposed via one Azure 
 Application Gateway.
 
-The web application is the dotnet Microsoft learn application https://github.com/MicrosoftDocs/mslearn-deploy-run-container-app-service
+The web application used for this project is the dotnet Microsoft learn application https://github.com/MicrosoftDocs/mslearn-deploy-run-container-app-service.
 
-The SSL Certificates are generated via Let's Encrypt. One Azure DNS Zone is used to associate the 
-custom domain with the web application.
-
-The automation script is implemented using one Azure Function App. The Let's Encrypt challenges are 
+The SSL Certificates are generated via Let's Encrypt. The Let's Encrypt challenges are 
 stored in one Azure Storage Account. Let's Encrypt will verify the challenges using a static web 
 application in the Storage Account.
+
+One Azure DNS Zone is used to associate a subdomain of the custom domain with the web application.
+
+The automation solution is implemented using a PowerShell script hosted in one Azure Function App. 
 
 ## Requirements
 
@@ -38,14 +39,24 @@ Create one file `secret/main.json` with the following content:
 }
 ```
 
-The "tenant_id" property corresponds to the Microsoft Entra tenant ID. The "subscription_id" property 
-correspond to the Azure Subscription ID. The "client_id" and "client_secret" properties correspond 
-to the client ID and secret of the App Registration. The "domain_name" property corresponds to the 
-name of the custom domain created in the domain registrar. The "email_address" property corresponds to 
-the email address used for creating the SSL certificate. The "pfx_password" property corresponds to the 
-password for the PFX SSL Certificate.
+The properties correspond to: 
+- tenant_id: Microsoft Entra tenant ID.
+- subscription_id: Azure Subscription ID.
+- client_id: client ID (application ID) of the App Registration.
+- client_secret: secret of the App Registration.
+- domain_name: name of the custom domain created in the domain registrar.
+- email_address: email address used for creating the SSL certificate.
+- pfx_password: password for the PFX SSL Certificate.
 
 ## Provision Solution
+
+Enable the Terraform resources, following the sequence number of the comments in the Terraform code.
+
+1. Configure the nameservers of the registered domain in the registrar portal with the nameservers defined by the Azure DNS Zone (Record name @, type NS).
+2. Create a temporary record in the Azure DNS Zone in order to generate the initial SSL Certificate.
+3. Configure the custom domain in the Storage Account after the temporary record has been created in the Azure DNS Zone.
+4. Provision the Application Gateway after the initial SSL certificate has been added to the Key Vault using the function in the Azure Function App.
+5. Create the final record in the Azure DNS Zone. Delete the temporary record from the Azure DNS Zone.
 
 Execute the following Terrafom commands:
 
