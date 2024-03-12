@@ -1,7 +1,13 @@
 locals {
-  web_application_domain_name = "app.${var.domain_name}"
-  ssl_certificate_name        = "sslcert"
-  tags                        = {}
+  web_application_domain_name    = "app.${var.domain_name}"
+  web_application_subdomain_name = "app"
+  ssl_certificate_name           = "sslcert"
+  tags = {
+    "CreationDate" = "2024-03-09T17:15:00.0000000Z"
+    "DeletionDate" = "2024-03-09T17:15:00.0000000Z"
+    "OwnerEmail"   = "marco@mobilabsolutions.com"
+    "OwnerName"    = "Marco Cella"
+  }
 }
 
 module "network" {
@@ -24,16 +30,14 @@ module "web_application" {
   tags            = local.tags
 }
 
-module "application_gateway" {
-  source = "./modules/application_gateway"
+module "ssl_certificate" {
+  source = "./modules/ssl_certificate"
 
-  location                          = var.location
-  location_abbreviation             = var.location_abbreviation
-  tenant_id                         = var.tenant_id
-  application_gateway_subnet_id     = module.network.application_gateway_subnet_id
-  app_service_default_site_hostname = module.web_application.app_service_default_site_hostname
-  host_name                         = local.web_application_domain_name
-  tags                              = local.tags
+  location              = var.location
+  location_abbreviation = var.location_abbreviation
+  domain_name           = var.domain_name
+  host_name             = local.web_application_domain_name
+  tags                  = local.tags
 }
 
 module "ssl_certificate_renewal" {
@@ -41,7 +45,12 @@ module "ssl_certificate_renewal" {
 
   location                              = var.location
   location_abbreviation                 = var.location_abbreviation
-  domain_name                           = var.domain_name
+  resource_group_name                   = module.ssl_certificate.resource_group_name
+  resource_group_id                     = module.ssl_certificate.resource_group_id
+  dns_zone_name                         = module.ssl_certificate.dns_zone_name
+  storage_account_name                  = module.ssl_certificate.storage_account_name
+  storage_account_primary_web_host      = module.ssl_certificate.storage_account_primary_web_host
+  web_application_subdomain_name        = local.web_application_subdomain_name
   key_vault_id                          = module.application_gateway.key_vault_id
   key_vault_name                        = module.application_gateway.key_vault_name
   application_gateway_resource_group_id = module.application_gateway.resource_group_id
@@ -54,4 +63,20 @@ module "ssl_certificate_renewal" {
   client_id                             = var.client_id
   client_secret                         = var.client_secret
   tags                                  = local.tags
+}
+
+module "application_gateway" {
+  source = "./modules/application_gateway"
+
+  location                          = var.location
+  location_abbreviation             = var.location_abbreviation
+  tenant_id                         = var.tenant_id
+  application_gateway_subnet_id     = module.network.application_gateway_subnet_id
+  app_service_default_site_hostname = module.web_application.app_service_default_site_hostname
+  host_name                         = local.web_application_domain_name
+  storage_account_primary_web_host  = module.ssl_certificate.storage_account_primary_web_host
+  dns_zone_name                     = module.ssl_certificate.dns_zone_name
+  dns_zone_resource_group_name      = module.ssl_certificate.resource_group_name
+  web_application_subdomain_name    = local.web_application_subdomain_name
+  tags                              = local.tags
 }
