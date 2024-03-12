@@ -2,12 +2,7 @@ locals {
   web_application_domain_name    = "app.${var.domain_name}"
   web_application_subdomain_name = "app"
   ssl_certificate_name           = "sslcert"
-  tags = {
-    "CreationDate" = "2024-03-09T17:15:00.0000000Z"
-    "DeletionDate" = "2024-03-09T17:15:00.0000000Z"
-    "OwnerEmail"   = "marco@mobilabsolutions.com"
-    "OwnerName"    = "Marco Cella"
-  }
+  tags = {}
 }
 
 module "network" {
