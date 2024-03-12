@@ -8,8 +8,32 @@ variable "location_abbreviation" {
   type        = string
 }
 
-variable "domain_name" {
-  description = "(Required) The custom domain name for the Azure DNS Zone."
+variable "resource_group_name" {
+  description = "(Required) The name of the Resource Group."
+  type        = string
+}
+
+variable "resource_group_id" {
+  description = "(Required) The ID of the Resource Group."
+  type        = string
+}
+
+variable "dns_zone_name" {
+  description = "(Required) The name of the Azure DNS Zone."
+  type        = string
+}
+
+variable "storage_account_name" {
+  description = "(Required) The name of the Storage Account that hosts the static web application."
+}
+
+variable "storage_account_primary_web_host" {
+  description = "(Required) The primay web host of the Storage Account static web appplication."
+  type        = string
+}
+
+variable "web_application_subdomain_name" {
+  description = "(Required) The name of the web application subdomain."
   type        = string
 }
 

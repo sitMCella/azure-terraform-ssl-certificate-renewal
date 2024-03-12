@@ -28,6 +28,26 @@ variable "host_name" {
   type        = string
 }
 
+variable "storage_account_primary_web_host" {
+  description = "(Required) The primay web host of the Storage Account static web app."
+  type        = string
+}
+
+variable "dns_zone_resource_group_name" {
+  description = "(Required) The name of the Resource Group with the Azure DNS Zone."
+  type        = string
+}
+
+variable "dns_zone_name" {
+  description = "(Required) The name of the Azure DNS Zone."
+  type        = string
+}
+
+variable "web_application_subdomain_name" {
+  description = "(Required) The name of the web application subdomain."
+  type        = string
+}
+
 variable "tags" {
   description = "(Optional) A mapping of tags which should be assigned to the Azure resources."
   type        = map(any)
