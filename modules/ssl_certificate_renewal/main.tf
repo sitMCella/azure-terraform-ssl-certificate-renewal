@@ -2,7 +2,7 @@
 resource "azurerm_dns_cname_record" "web_application_dns_zone_record" {
   name                = var.web_application_subdomain_name
   zone_name           = var.dns_zone_name
-  resource_group_name = var.resource_group_name
+  resource_group_name = var.dns_zone_resource_group_name
   ttl                 = 10
   record              = var.storage_account_primary_web_host
 }
@@ -37,19 +37,19 @@ resource "azurerm_user_assigned_identity" "function_app_user_assigned_identity" 
   tags                = var.tags
 }
 
-resource "azurerm_role_assignment" "function_app_identity_role_assignment" {
+resource "azurerm_role_assignment" "function_app_identity_role_assignment_001" {
   scope                = azurerm_storage_account.storage_account_function_app.id
   role_definition_name = "Storage Account Contributor"
   principal_id         = azurerm_user_assigned_identity.function_app_user_assigned_identity.principal_id
 }
 
-resource "azurerm_role_assignment" "function_app_identity_role_assignment_003" {
+resource "azurerm_role_assignment" "function_app_identity_role_assignment_002" {
   scope                = var.resource_group_id
   role_definition_name = "Reader"
   principal_id         = azurerm_user_assigned_identity.function_app_user_assigned_identity.principal_id
 }
 
-resource "azurerm_role_assignment" "function_app_identity_role_assignment_002" {
+resource "azurerm_role_assignment" "function_app_identity_role_assignment_003" {
   scope                = var.key_vault_id
   role_definition_name = "Key Vault Administrator"
   principal_id         = azurerm_user_assigned_identity.function_app_user_assigned_identity.principal_id

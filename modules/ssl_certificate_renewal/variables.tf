@@ -18,6 +18,11 @@ variable "resource_group_id" {
   type        = string
 }
 
+variable "dns_zone_resource_group_name" {
+  description = "(Required) The name of the Resource Group with the Azure DNS Zone."
+  type        = string
+}
+
 variable "dns_zone_name" {
   description = "(Required) The name of the Azure DNS Zone."
   type        = string

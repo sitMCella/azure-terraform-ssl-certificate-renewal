@@ -14,6 +14,14 @@ module "network" {
   tags                                        = local.tags
 }
 
+module "dns_zone" {
+  source = "./modules/dns_zone"
+
+  location    = var.location
+  domain_name = var.domain_name
+  tags        = local.tags
+}
+
 module "web_application" {
   source = "./modules/web_application"
 
@@ -30,7 +38,6 @@ module "ssl_certificate" {
 
   location              = var.location
   location_abbreviation = var.location_abbreviation
-  domain_name           = var.domain_name
   host_name             = local.web_application_domain_name
   tags                  = local.tags
 }
@@ -42,7 +49,8 @@ module "ssl_certificate_renewal" {
   location_abbreviation                 = var.location_abbreviation
   resource_group_name                   = module.ssl_certificate.resource_group_name
   resource_group_id                     = module.ssl_certificate.resource_group_id
-  dns_zone_name                         = module.ssl_certificate.dns_zone_name
+  dns_zone_resource_group_name          = module.dns_zone.resource_group_name
+  dns_zone_name                         = module.dns_zone.dns_zone_name
   storage_account_name                  = module.ssl_certificate.storage_account_name
   storage_account_primary_web_host      = module.ssl_certificate.storage_account_primary_web_host
   web_application_subdomain_name        = local.web_application_subdomain_name
@@ -70,8 +78,8 @@ module "application_gateway" {
   app_service_default_site_hostname = module.web_application.app_service_default_site_hostname
   host_name                         = local.web_application_domain_name
   storage_account_primary_web_host  = module.ssl_certificate.storage_account_primary_web_host
-  dns_zone_name                     = module.ssl_certificate.dns_zone_name
-  dns_zone_resource_group_name      = module.ssl_certificate.resource_group_name
+  dns_zone_resource_group_name      = module.dns_zone.resource_group_name
+  dns_zone_name                     = module.dns_zone.dns_zone_name
   web_application_subdomain_name    = local.web_application_subdomain_name
   tags                              = local.tags
 }
