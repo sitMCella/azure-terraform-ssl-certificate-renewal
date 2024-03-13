@@ -8,11 +8,6 @@ output "resource_group_id" {
   value       = azurerm_resource_group.ssl_certificate_renewal_resource_group.id
 }
 
-output "dns_zone_name" {
-  description = "The name of the Azure DNS Zone."
-  value       = azurerm_dns_zone.dns_zone.name
-}
-
 output "storage_account_name" {
   description = "The name of the Storage Account."
   value       = azurerm_storage_account.storage_account.name

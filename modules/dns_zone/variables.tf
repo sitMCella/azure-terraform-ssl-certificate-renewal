@@ -3,13 +3,8 @@ variable "location" {
   type        = string
 }
 
-variable "location_abbreviation" {
-  description = "(Required) The abbreviation of the location used in the name of the Azure resources."
-  type        = string
-}
-
-variable "host_name" {
-  description = "(Required) The custom host name for the web application."
+variable "domain_name" {
+  description = "(Required) The custom domain name for the Azure DNS Zone."
   type        = string
 }
 

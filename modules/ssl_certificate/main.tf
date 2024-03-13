@@ -4,13 +4,6 @@ resource "azurerm_resource_group" "ssl_certificate_renewal_resource_group" {
   tags     = var.tags
 }
 
-// 1. Configure the nameservers of the registered domain in the registrar portal with the nameservers defined by the Azure DNS Zone (Record name @, type NS).
-resource "azurerm_dns_zone" "dns_zone" {
-  name                = var.domain_name
-  resource_group_name = azurerm_resource_group.ssl_certificate_renewal_resource_group.name
-  tags                = var.tags
-}
-
 resource "azurerm_storage_account" "storage_account" {
   name                          = "stsslcertprod${var.location_abbreviation}001"
   resource_group_name           = azurerm_resource_group.ssl_certificate_renewal_resource_group.name

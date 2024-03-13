@@ -30,18 +30,13 @@ resource "null_resource" "docker_image" {
   }
 }
 
-resource "azurerm_app_service_plan" "app_service_plan" {
-  name                = "asp-web-application-prod-${var.location}-001"
+resource "azurerm_service_plan" "app_service_plan" {
+  name                = "asp-function-app-prod-${var.location}-001"
   location            = var.location
   resource_group_name = azurerm_resource_group.web_application_resource_group.name
-  kind                = "Linux"
-  reserved            = true
-  is_xenon            = false
-  sku {
-    tier = "PremiumV2"
-    size = "P1v2"
-  }
-  tags = var.tags
+  os_type             = "Linux"
+  sku_name            = "P1v2"
+  tags                = var.tags
 }
 
 resource "random_string" "random_web_application_name" {
@@ -67,7 +62,7 @@ resource "azurerm_app_service" "app_service" {
   name                = "app-${random_string.random_web_application_name.result}-prod-${var.location}-001"
   location            = var.location
   resource_group_name = azurerm_resource_group.web_application_resource_group.name
-  app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
+  app_service_plan_id = azurerm_service_plan.app_service_plan.id
   identity {
     type         = "UserAssigned"
     identity_ids = [azurerm_user_assigned_identity.app_service_user_assigned_identity.id]
