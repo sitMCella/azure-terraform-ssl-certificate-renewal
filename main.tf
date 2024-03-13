@@ -2,7 +2,7 @@ locals {
   web_application_domain_name    = "app.${var.domain_name}"
   web_application_subdomain_name = "app"
   ssl_certificate_name           = "sslcert"
-  tags = {}
+  tags                           = {}
 }
 
 module "network" {
